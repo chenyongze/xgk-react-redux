@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, StrictMode } from 'react';
 import store from '../../store'
-import { changeInputAction, addItemAction, deleteItemAction,getListAction } from '../../store/actionCreator'
+import { getMyListAction, changeInputAction, addItemAction, deleteItemAction } from '../../store/actionCreator'
 import TodoListUI from './TodoListUI';
 
-import axios from 'axios';
 
 class TodoList extends Component {
 
@@ -18,12 +17,10 @@ class TodoList extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://b-coupon.dotalk.cn/leyou/api.t/redux_list').then((res)=>{
-            console.log(res);
-            const action = getListAction(res);
-            store.dispatch(action);
-        })
-
+        const action = getMyListAction();
+        store.dispatch(action);
+        // console.log(action);
+        // store.dispatch(action);
     }
 
     render() {
