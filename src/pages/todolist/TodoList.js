@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import 'antd/dist/antd.css';
-import { Input, Button } from 'antd/dist/antd';
-import { List } from 'antd';
-import './index.css';
 import store from '../../store'
+import { changeInputAction, addItemAction, deleteItemAction } from '../../store/actionCreator'
+import TodoListUI from './TodoListUI';
 
 class TodoList extends Component {
 
@@ -12,43 +10,26 @@ class TodoList extends Component {
         this.state = store.getState();
         this.changInputValue = this.changInputValue.bind(this);
         this.clickBtn = this.clickBtn.bind(this);
+        this.deletedItem = this.deletedItem.bind(this);
         this.storeChange = this.storeChange.bind(this);
         store.subscribe(this.storeChange);
     }
 
     render() {
         return (
-            <div style={{ margin: '10px' }}>
-                <Input placeholder={this.state.inputVal}
-                    style={{
-                        width: '250px',
-                        marginRight: '10px',
-                    }}
-                    onChange={this.changInputValue}
-                />
-                <Button
-                    type='primary'
-                    onClick={this.clickBtn}
-                >增加</Button>
-
-                <div className="list-b">
-                    <List bordered
-                        dataSource={this.state.list}
-                        renderItem={(item, index) => (<List.Item onClick={this.deletedItem.bind(this, index)}>{item}</List.Item>)} >
-
-                    </List>
-                </div>
-            </div>
+            <TodoListUI
+                inputValue={this.state.inputVal}
+                changInputValue={this.changInputValue}
+                clickBtn={this.clickBtn}
+                list={this.state.list}
+                deletedItem={this.deletedItem}
+            />
         );
     }
 
     changInputValue(e) {
         // console.log(e.target.value)
-        const action = {
-            type: 'changInput',
-            value: e.target.value
-
-        }
+        const action = changeInputAction(e.target.value);
         store.dispatch(action);
     }
 
@@ -58,16 +39,16 @@ class TodoList extends Component {
 
     clickBtn() {
         // console.log('clickBtn');
-        const action = {
-            type: 'addItem'
-        }
+        const action = addItemAction();
         store.dispatch(action);
 
     }
+    // 删除 
     deletedItem(index) {
-        console.log(index);
+        // console.log(index);
+        const action = deleteItemAction(index);
+        store.dispatch(action);
     }
-
 }
 
 export default TodoList;
