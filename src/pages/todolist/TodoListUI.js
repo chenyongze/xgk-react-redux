@@ -4,6 +4,7 @@ import { Input, Button } from 'antd/dist/antd';
 import { List } from 'antd';
 import './index.css';
 
+//无状态 组件
 const TodoListUI = (props) => {
     return (
         <div style={{ margin: '10px' }}>
@@ -35,6 +36,7 @@ const TodoListUI = (props) => {
         </div>
     )
 }
+
 
 // class TodoListUI extends Component {
 //     render() {
