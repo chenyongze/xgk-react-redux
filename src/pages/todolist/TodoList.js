@@ -14,7 +14,6 @@ class TodoList extends Component {
         this.storeChange = this.storeChange.bind(this);
         store.subscribe(this.storeChange);
     }
-
     render() {
         return (
             <TodoListUI
